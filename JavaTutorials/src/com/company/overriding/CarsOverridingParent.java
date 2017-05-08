@@ -5,7 +5,11 @@ package com.company.overriding;
  */
 public class CarsOverridingParent {
 
-    public void engineStart(int cyl){
+      public void engineStart(int cyl){
         System.out.println("i am from parent class");
+    }
+
+    public static void staticMethod(){
+        System.out.println("I am static method from parent class!!!!");
     }
 }

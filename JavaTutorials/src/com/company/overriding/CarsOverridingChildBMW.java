@@ -14,8 +14,12 @@ public class CarsOverridingChildBMW extends CarsOverridingParent{
         parent1.engineStart(30);
     }
 
-    @Override
+    //@Override
     public void engineStart(int cyl) {
         System.out.println("i am from the child class ...");
+    }
+
+    public static void staticMethod(){
+        System.out.println("I am static method from child class!!!!");
     }
 }
