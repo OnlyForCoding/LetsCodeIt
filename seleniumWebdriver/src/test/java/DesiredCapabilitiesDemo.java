@@ -1,6 +1,7 @@
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -16,12 +17,16 @@ public class DesiredCapabilitiesDemo {
 
     @BeforeClass
     public void init(){
-        System.setProperty("webdriver.gecko.driver","/home/jitendra/Documents/webdriver/geckodriver");
+        /*System.setProperty("webdriver.gecko.driver","/home/jitendra/Documents/webdriver/geckodriver");
         caps = DesiredCapabilities.firefox();
         caps.setBrowserName("firefox");
         caps.setPlatform(Platform.LINUX);
         caps.setVersion("47");
-        driver = new FirefoxDriver(caps);
+        driver = new FirefoxDriver(caps);*/
+
+        DesiredCapabilities cp = new DesiredCapabilities();
+        cp.setCapability(InternetExplorerDriver.NATIVE_EVENTS,false);
+
     }
 
     @Test
