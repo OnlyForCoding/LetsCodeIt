@@ -7,13 +7,7 @@ import org.testng.annotations.Test;
 /**
  * Created by jitendra on 9/5/17.
  */
-public class FirefoxDriverDemo {
-   WebDriver driver;
-    @BeforeClass
-    public void init(){
-        System.setProperty("webdriver.gecko.driver","/home/jitendra/Documents/webdriver/geckodriver");
-        driver = new FirefoxDriver();
-    }
+public class FirefoxDriverDemo extends BaseClass{
 
     @Test
     public void firefox(){

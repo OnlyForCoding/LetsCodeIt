@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -12,12 +13,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by jitendra on 9/5/17.
  */
-public class ChromeDriverDemo {
-    WebDriver driver;
-    @BeforeClass
-    public void init() {
-        System.setProperty("webdriver.chrome.driver", "/home/jitendra/Documents/webdriver/chromedriver");
-        driver = new ChromeDriver();
+public class ChromeDriverDemo extends BaseClass{
+
+    @BeforeMethod
+    public void before() {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
