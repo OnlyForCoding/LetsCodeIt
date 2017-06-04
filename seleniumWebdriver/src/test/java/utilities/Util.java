@@ -1,7 +1,5 @@
 package utilities;
 
-import org.apache.bcel.generic.BREAKPOINT;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -40,7 +38,7 @@ public class Util {
     public String getBrowser(){
         String browser = System.getProperty("browser");
         if (browser == null || browser == ""){
-            this.browser = "firefox";
+            this.browser = "chrome";
             System.out.println("browser is : "+this.browser);
         } else {
             this.browser = browser;
