@@ -1,0 +1,4 @@
+
+WARN - This is warn message
+FATAL - This is fatal message
+ERROR - This is error message
