@@ -1,5 +1,6 @@
 package basepkg;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -17,6 +18,8 @@ public class BaseClass {
     @BeforeSuite
     public void initUtils(){
         this.utils = new Util();
+        String log4jConfPath = "src/test/java/log4j.properties";
+        PropertyConfigurator.configure(log4jConfPath);
     }
 
     @BeforeClass
