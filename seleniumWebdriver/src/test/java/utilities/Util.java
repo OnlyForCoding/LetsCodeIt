@@ -1,5 +1,9 @@
 package utilities;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -8,6 +12,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,7 +26,7 @@ public class Util {
     private String browser;
     private String platform;
     private String mode;
-    private RemoteWebDriver driver;
+    public RemoteWebDriver driver;
     private String ipAddress;
     private DesiredCapabilities caps ;
 
@@ -29,6 +35,7 @@ public class Util {
         this.platform = getPlatform();
         this.mode = getMode();
         this.ipAddress = getIpAddress();
+        this.driver = getDriver(browser);
     }
 
     /***
@@ -59,7 +66,7 @@ public class Util {
     public RemoteWebDriver initDriver(String browser) {
         if (browser == "chrome"){
             this.driver = new ChromeDriver();
-        } else if (browser == "firefox"){
+        } else if (browser.equals("firefox")){
             this.driver = new FirefoxDriver();
         } else if (browser == "internet explorer"){
             this.driver = new InternetExplorerDriver();
@@ -137,11 +144,11 @@ public class Util {
         }
 
         try {
-            driver = new RemoteWebDriver(new URL("http://"+ipAddress+"/wd/hub"), caps);
+            this.driver = new RemoteWebDriver(new URL("http://"+ipAddress+"/wd/hub"), caps);
         } catch (MalformedURLException ex){
             System.out.println("driver is not initialising");
         }
-        return driver;
+        return this.driver;
     }
 
     private void getDriversPath(String platform,String browser){
@@ -165,6 +172,22 @@ public class Util {
 
         if (browser.equalsIgnoreCase("MicrosoftEdge")) {
             System.setProperty("webdriver.egde.driver", "src/test/drivers/" + platform + "/MicrosoftWebDriver.exe");
+        }
+    }
+
+    public WebElement expandRootElement(WebDriver driver){
+            WebElement ele = (WebElement) ((JavascriptExecutor) driver).executeScript("return document.querySelector('settings-ui').shadowRoot.querySelector('#main').shadowRoot.querySelector('settings-basic-page').shadowRoot.querySelector('settings-privacy-page').shadowRoot.querySelector('#pages').querySelector('settings-subpage[page-title=\"Flash\"]').querySelector('category-default-setting').shadowRoot.querySelector('#toggle').shadowRoot.querySelector('#label')");
+        return ele;
+    }
+
+    public boolean waitOnElement(int seconds, By by){
+        try {
+            WebDriverWait wait = new WebDriverWait((RemoteWebDriver) this.driver, seconds);
+            wait.until(ExpectedConditions.presenceOfElementLocated(by));
+            return true;
+        }catch (Exception e){
+            e.getStackTrace();
+            return false;
         }
     }
 }
