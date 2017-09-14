@@ -26,7 +26,7 @@ public class UpdateTickets extends BaseClass{
         driver.findElement(By.id("login-form-submit")).click();
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1,groups = "putEstimateTime")
     public void updateTickets() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver,20);
         driver.switchTo().frame("gadget-10002");
@@ -56,7 +56,12 @@ public class UpdateTickets extends BaseClass{
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.id("timetracking_originalestimate")));
                 driver.findElement(By.id("timetracking_originalestimate")).click();
                 driver.findElement(By.id("timetracking_originalestimate")).clear();
-                driver.findElement(By.id("timetracking_originalestimate")).sendKeys("1d");
+                String TimeReqToFinishTheTask;
+                TimeReqToFinishTheTask = System.getProperty("TimeReqToFinishTheTask");
+                if (TimeReqToFinishTheTask == null || TimeReqToFinishTheTask == ""){
+                    TimeReqToFinishTheTask = "1d";
+                }
+                driver.findElement(By.id("timetracking_originalestimate")).sendKeys(TimeReqToFinishTheTask);
                 driver.findElement(By.id("edit-issue-submit")).submit();
 
                 Thread.sleep(2000);
@@ -75,7 +80,6 @@ public class UpdateTickets extends BaseClass{
                     if (breakIt) {
                         break;
                     }
-
                 }
 
                 if (!driver.findElement(By.id("log-work")).isDisplayed()){
@@ -86,7 +90,12 @@ public class UpdateTickets extends BaseClass{
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.id("log-work-time-logged")));
                 driver.findElement(By.id("log-work-time-logged")).clear();
                 driver.findElement(By.id("log-work-time-logged")).click();
-                driver.findElement(By.id("log-work-time-logged")).sendKeys("1d");
+                String TimeTakenToFinishTheTask;
+                TimeTakenToFinishTheTask = System.getProperty("TimeTaken");
+                if (TimeTakenToFinishTheTask == null || TimeTakenToFinishTheTask == ""){
+                    TimeTakenToFinishTheTask = TimeReqToFinishTheTask;
+                }
+                driver.findElement(By.id("log-work-time-logged")).sendKeys(TimeTakenToFinishTheTask);
                 driver.findElement(By.id("log-work-submit")).submit();
                 Thread.sleep(1000);
                 driver.findElement(By.ByClassName.xpath(".//ul[@id='opsbar-opsbar-transitions']//span[text()='Resolve Issue']")).click();

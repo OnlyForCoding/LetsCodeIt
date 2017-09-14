@@ -24,7 +24,7 @@ public class ExplicitWait extends BaseClass {
         query.submit();
 
         WebDriverWait wait = new WebDriverWait(driver,10);
-        wait.until(ExpectedConditions.titleContains("selenium"));
+        //wait.until(ExpectedConditions.titleContains("selenium"));
         Assert.assertTrue(driver.getTitle().toLowerCase().startsWith("selenium"));
     }
 }

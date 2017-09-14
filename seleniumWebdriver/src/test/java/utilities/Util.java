@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -15,8 +16,10 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.UUID;
 
 /**
  * Created by jitendra on 29/5/17.
@@ -67,7 +70,7 @@ public class Util {
         if (browser == "chrome"){
             this.driver = new ChromeDriver();
         } else if (browser.equals("firefox")){
-            this.driver = new FirefoxDriver();
+            this.driver = new FirefoxDriver(setFirefoxProfile());
         } else if (browser == "internet explorer"){
             this.driver = new InternetExplorerDriver();
         } else if (browser == "MicrosoftEdge"){
@@ -183,11 +186,24 @@ public class Util {
     public boolean waitOnElement(int seconds, By by){
         try {
             WebDriverWait wait = new WebDriverWait((RemoteWebDriver) this.driver, seconds);
-            wait.until(ExpectedConditions.presenceOfElementLocated(by));
+            //wait.until(ExpectedConditions.presenceOfElementLocated(by));
             return true;
         }catch (Exception e){
             e.getStackTrace();
             return false;
         }
+    }
+
+    public File folder;
+    public FirefoxProfile setFirefoxProfile(){
+        folder = new File("download");
+        folder.mkdir();
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("browser.download.dir",folder.getAbsolutePath());
+        profile.setPreference("browser.download.folderList", 2);
+        profile.setPreference("browser.helperApps.neverAsk.saveToDisk",
+                "image/jpeg, application/pdf, application/octet-stream");
+        profile.setPreference("pdfjs.disabled", true);
+        return profile;
     }
 }
