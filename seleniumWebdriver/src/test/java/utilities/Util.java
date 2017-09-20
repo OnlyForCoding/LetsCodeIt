@@ -67,10 +67,10 @@ public class Util {
     }
 
     public RemoteWebDriver initDriver(String browser) {
-        if (browser == "chrome"){
+        if (browser.equals("chrome")){
             this.driver = new ChromeDriver();
         } else if (browser.equals("firefox")){
-            this.driver = new FirefoxDriver(setFirefoxProfile());
+            this.driver = new FirefoxDriver();
         } else if (browser == "internet explorer"){
             this.driver = new InternetExplorerDriver();
         } else if (browser == "MicrosoftEdge"){
@@ -204,6 +204,41 @@ public class Util {
         profile.setPreference("browser.helperApps.neverAsk.saveToDisk",
                 "image/jpeg, application/pdf, application/octet-stream");
         profile.setPreference("pdfjs.disabled", true);
+
+        System.out.println(System.getProperty("user.dir"));
+
+        File firebug = new File(System.getProperty("user.dir") + "\\resources\\firebug-1.10.6.xpi");
+        File netExport = new File(System.getProperty("user.dir") + "\\resources\\netExport-0.9b3.xpi");
+
+        try {
+            profile.addExtension(firebug);
+            profile.addExtension(netExport);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        profile.setPreference("app.update.enabled", false);
+
+//Setting Firebug preferences
+        profile.setPreference("extensions.firebug.currentVersion", "2.0");
+        profile.setPreference("extensions.firebug.addonBarOpened", true);
+        profile.setPreference("extensions.firebug.console.enableSites", true);
+        profile.setPreference("extensions.firebug.script.enableSites", true);
+        profile.setPreference("extensions.firebug.net.enableSites", true);
+        profile.setPreference("extensions.firebug.previousPlacement", 1);
+        profile.setPreference("extensions.firebug.allPagesActivation", "on");
+        profile.setPreference("extensions.firebug.onByDefault", true);
+        profile.setPreference("extensions.firebug.defaultPanelName", "net");
+
+// Setting netExport preferences
+
+        File netWorkLogs = new File("CaptureNetworkTraffic");
+        netWorkLogs.mkdir();
+        profile.setPreference("extensions.firebug.netexport.alwaysEnableAutoExport", true);
+        profile.setPreference("extensions.firebug.netexport.autoExportToFile", true);
+        profile.setPreference("extensions.firebug.netexport.Automation", true);
+        profile.setPreference("extensions.firebug.netexport.showPreview", false);
+        profile.setPreference("extensions.firebug.netexport.defaultLogDir", netWorkLogs.getAbsolutePath());
         return profile;
     }
 }
