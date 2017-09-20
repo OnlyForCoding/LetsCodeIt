@@ -112,6 +112,10 @@ public class UpdateTickets extends BaseClass{
                 isTrPresent = false;
             }
         }
+    }
+
+    @Test(priority = 2)
+    public void logout(){
         waitOnElement(10,By.id("header-details-user-fullname"));
         driver.findElement(By.id("header-details-user-fullname")).click();
         waitOnElement(10,By.id("log_out"));
@@ -119,17 +123,6 @@ public class UpdateTickets extends BaseClass{
         waitOnElement(10,By.xpath("//li[@id='user-options']//a[text()='Log In']"));
         Assert.assertTrue(waitOnElement(10,By.xpath("//li[@id='user-options']//a[text()='Log In']")),"User in not looged out successfully");
         System.out.println("Logged Out Successfully");
-    }
-
-    @Test(priority = 2)
-    public void logout(){
-        /*waitOnElement(10,By.id("header-details-user-fullname"));
-        driver.findElement(By.id("header-details-user-fullname")).click();
-        waitOnElement(10,By.id("log_out"));
-        driver.findElement(By.id("log_out")).click();
-        waitOnElement(10,By.xpath("//li[@id='user-options']//a[text()='Log In']"));
-        Assert.assertTrue(waitOnElement(10,By.xpath("//li[@id='user-options']//a[text()='Log In']")),"User in not looged out successfully");
-        System.out.println("Logged Out Successfully");*/
     }
 
     public boolean apply(WebElement element) {
